@@ -15,7 +15,7 @@ build environments.
 
 ## Usage
 
-Put `[com.circleci/lein-protoc "0.6.0"]` into the `:plugins` vector of your project.clj.
+Put `[com.circleci/lein-protoc "0.6.1"]` into the `:plugins` vector of your project.clj.
 
 The following options can be configured in the project.clj:
 

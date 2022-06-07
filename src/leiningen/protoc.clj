@@ -193,9 +193,12 @@
 
 (defn get-arch
   []
-  (if-let [arch (leiningen.core.utils/get-arch)]
-    (name (if (= arch :x86) :x86_32 arch))
-    (throw (Exception. "Leiningen failed to detect the processor architecture"))))
+  ;; backport fix from leiningen: https://github.com/technomancy/leiningen/commit/60f7ab7cb132ad5e495688ec4f066a575c9996c9
+  (let [native-names-updated (assoc @#'leiningen.core.utils/native-names "aarch64" :aarch_64)]
+    (with-redefs [leiningen.core.utils/native-names native-names-updated]
+      (if-let [arch (leiningen.core.utils/get-arch)]
+        (name (if (= arch :x86) :x86_32 arch))
+        (throw (Exception. "Leiningen failed to detect the processor architecture"))))))
 
 (defn resolve-classifier
   "Versions of com.google.protobuf/protoc prior to 3.17.3 don't ship binaries
