@@ -7,7 +7,7 @@
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.11.1"]]
   :profiles {:dev {:dependencies [[com.google.protobuf/protobuf-java "3.3.1"]
-                                  [org.clojure/core.specs.alpha "0.3.218"]
+                                  [org.clojure/spec.alpha "0.3.218"]
                                   [lambdaisland/kaocha "0.0-601"]
                                   [lambdaisland/kaocha-junit-xml "0.0-70"]]}}
   :plugins [[lein-codox "0.10.3"]]
