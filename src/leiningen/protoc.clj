@@ -2,7 +2,7 @@
   "Leiningen plugin for compiling Google Protocol Buffers"
   (:require [cemerick.pomegranate.aether :as aether]
             [clojure.java.io :as io]
-            [clojure.spec :as spec]
+            [clojure.spec.alpha :as spec]
             [leiningen.core.main :as main]
             [leiningen.core.utils]
             [leiningen.core.classpath :as classpath]
@@ -101,19 +101,19 @@
    {:keys [proto-source-paths builtin-proto-path proto-dep-paths]}
    {:keys [proto-target-path grpc-target-path]}]
   (if protoc-exe
-    (let [all-srcs        (concat proto-dep-paths (if builtin-proto-path
-                                                    (conj proto-source-paths builtin-proto-path)
-                                                    proto-source-paths))
-          src-paths-args  (map str->src-path-arg all-srcs)
+    (let [all-srcs (concat proto-dep-paths (if builtin-proto-path
+                                             (conj proto-source-paths builtin-proto-path)
+                                             proto-source-paths))
+          src-paths-args (map str->src-path-arg all-srcs)
           target-path-arg (str "--java_out="
                                (resolve-target-path! proto-target-path))
           grpc-plugin-arg (when protoc-grpc-exe
                             (str "--plugin=protoc-gen-grpc-java="
                                  protoc-grpc-exe))
-          grpc-path-arg   (when protoc-grpc-exe
-                            (str "--grpc-java_out="
-                                 (resolve-target-path! grpc-target-path)))
-          proto-files     (mapcat proto-files proto-source-paths)]
+          grpc-path-arg (when protoc-grpc-exe
+                          (str "--grpc-java_out="
+                               (resolve-target-path! grpc-target-path)))
+          proto-files (mapcat proto-files proto-source-paths)]
       (when (and (not-empty proto-files)
                  (outdated-protos? proto-source-paths proto-target-path))
         (main/info "Compiling" (count proto-files) "proto files:" proto-files)
@@ -123,8 +123,8 @@
              (remove nil?)
              vec)))
     (do
-     (print-warn-msg "Failed to find a suitable version of protoc")
-     nil)))
+      (print-warn-msg "Failed to find a suitable version of protoc")
+      nil)))
 
 (defn parse-response
   [process]
@@ -212,10 +212,10 @@
   "Resolves the Google Protocol Buffers code generation artifact+version in the
   local maven repository if it exists or downloads from Maven Central"
   [artifact protoc-version]
-  (let [version     (if (= :latest protoc-version)
-                      (latest-version artifact)
-                      protoc-version)
-        classifier  (resolve-classifier (get-os) (get-arch) version)
+  (let [version (if (= :latest protoc-version)
+                  (latest-version artifact)
+                  protoc-version)
+        classifier (resolve-classifier (get-os) (get-arch) version)
         coordinates [artifact version :classifier classifier :extension "exe"]]
     (aether/resolve-artifacts :coordinates [coordinates])
     coordinates))
@@ -338,9 +338,9 @@
 (spec/def :protoc/grpc
   (spec/nilable
     (spec/or :bool #(instance? Boolean %)
-             :map  (spec/keys
-                     :opt-un [:protoc/version
-                              :protoc/target-path]))))
+             :map (spec/keys
+                    :opt-un [:protoc/version
+                             :protoc/target-path]))))
 
 (spec/def :protoc/timeout
   (spec/nilable integer?))
