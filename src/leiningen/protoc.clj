@@ -2,7 +2,7 @@
   "Leiningen plugin for compiling Google Protocol Buffers"
   (:require [cemerick.pomegranate.aether :as aether]
             [clojure.java.io :as io]
-            [clojure.spec :as spec]
+            [clojure.spec.alpha :as spec]
             [leiningen.core.main :as main]
             [leiningen.core.utils]
             [leiningen.core.classpath :as classpath]
@@ -24,10 +24,10 @@
            [java.util.concurrent TimeUnit]))
 
 (def +protoc-version-default+
-  "3.4.0")
+  "3.25.8")
 
 (def +protoc-grpc-version-default+
-  "1.6.1")
+  "1.79.0")
 
 (def +proto-source-paths-default+
   ["src/proto"])
