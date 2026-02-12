@@ -6,7 +6,7 @@
   :min-lein-version "2.0.0"
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.12.4"]]
-  :profiles {:dev {:dependencies [[com.google.protobuf/protobuf-java "3.25.8"]
+  :profiles {:dev {:dependencies [[com.google.protobuf/protobuf-java "4.33.3"]
                                   [lambdaisland/kaocha "1.91.1392"]
                                   [lambdaisland/kaocha-junit-xml "1.17.101"]]}}
   :plugins [[lein-codox "0.10.8"]]
