@@ -3,7 +3,7 @@ version: 2.1
 executors:
   clojure:
     docker:
-      - image: circleci/clojure:lein
+      - image: clojure:lein-2.12.0
 
 jobs:
   lint:
